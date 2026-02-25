@@ -16,7 +16,6 @@ const register = async (username , name, password) => {
 }
 
 
-
 const login = async (username , password) => {
     const response = await fetch(`${URL}/api/auth/login`,{
         method : "POST",
@@ -31,20 +30,38 @@ const login = async (username , password) => {
     console.log("Login" , data);
 }
 
+//    const response = await fetch(`${URL}/api/locals`).then( res => res.json());
 
+const getLocals = async (q="", type="", priceRange="", rating="", city="", zone="") => {
 
+    const response = await fetch(`${URL}/api/locals?q=${q}&type=${type}&priceRange=${priceRange}&rating=${rating}&city=${city}&zone=${zone}`);
 
+    const data = await response.json();
 
-// POST
-// PUT
-// PATCH
-// DELETE
+    console.log(data);
+    return data;
 
+}
 
-// GET
+const postLocal = async (name, type, priceRange, city, zone, address, hours,photos) => {
+
+    const response = await fetch(`${URL}/api/locals`,{
+        method : "POST",
+        headers:{"Content-Type" : "application/json" , 'Authorization' : `Bearer ${localStorage.getItem("token")}`}
+        ,
+        body: JSON.stringify({name , type, priceRange, city , zone , address , hours , photos })
+    } )
+
+    const data = await response.json();
+
+    console.log(data);
+}
+
 
 
 export{
     register,
-    login
+    login,
+    getLocals,
+    postLocal,
 }
