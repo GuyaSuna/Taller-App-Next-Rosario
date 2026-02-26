@@ -57,6 +57,15 @@ const postLocal = async (name, type, priceRange, city, zone, address, hours,phot
     console.log(data);
 }
 
+const getLocal = async (id) => {
+    const response = await fetch(`${URL}/api/locals/${id}`);
+
+    const data = await response.json();
+
+    console.log(data);
+
+    return data;
+}
 
 
 export{
@@ -64,4 +73,5 @@ export{
     login,
     getLocals,
     postLocal,
+    getLocal
 }

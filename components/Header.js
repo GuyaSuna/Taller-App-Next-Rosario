@@ -1,8 +1,9 @@
 
 
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import SesionPanel from './SesionPanel'
 import Link from 'next/link'
 
 const navigation = [
@@ -14,6 +15,13 @@ const navigation = [
 
 const Header = () => {
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+   const [user , setUser] = useState({});
+
+       useEffect(() => {
+           const user = JSON.parse(localStorage.getItem("user"));
+           console.log("Usuario en Listado Principal" , user);
+           setUser(user);
+       }, [])
 
     return(<header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
@@ -45,9 +53,9 @@ const Header = () => {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link href="#" className="text-sm/6 font-semibold text-gray-900">
+            {user ? (<SesionPanel/>) : ( <Link href="#" className="text-sm/6 font-semibold text-gray-900">
               Log in <span aria-hidden="true">&rarr;</span>
-            </Link>
+            </Link> ) }
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -85,12 +93,9 @@ const Header = () => {
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in
-                  </a>
+ {user ? (<SesionPanel/>) : ( <Link href="#" className="text-sm/6 font-semibold text-gray-900">
+              Log in <span aria-hidden="true">&rarr;</span>
+            </Link> ) }
                 </div>
               </div>
             </div>
