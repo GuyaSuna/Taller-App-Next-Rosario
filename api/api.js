@@ -68,10 +68,35 @@ const getLocal = async (id) => {
 }
 
 
+const getUser = async (id) => {
+    const response = await fetch(`${URL}/api/users/${id}`);
+
+    const data = await response.json();
+
+    return data;
+}
+
+
+const postReview = async (id , rating , comment) => {
+
+    const response = await fetch(`${URL}/api/locals/${id}/reviews`,{
+        method : "POST",
+        headers:{"Content-Type" : "application/json" , 'Authorization' : `Bearer ${localStorage.getItem("token")}`}
+        ,
+        body: JSON.stringify({rating, comment})
+    } )
+
+    const data = await response.json();
+
+    console.log(data);
+}
+
 export{
     register,
     login,
     getLocals,
     postLocal,
-    getLocal
+    getLocal,
+    getUser,
+    postReview
 }

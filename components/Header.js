@@ -53,7 +53,7 @@ const Header = () => {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {user ? (<SesionPanel/>) : ( <Link href="#" className="text-sm/6 font-semibold text-gray-900">
+            {user ? (<SesionPanel/>) : ( <Link href="/" className="text-sm/6 font-semibold text-gray-900">
               Log in <span aria-hidden="true">&rarr;</span>
             </Link> ) }
           </div>
@@ -93,7 +93,7 @@ const Header = () => {
                   ))}
                 </div>
                 <div className="py-6">
- {user ? (<SesionPanel/>) : ( <Link href="#" className="text-sm/6 font-semibold text-gray-900">
+ {user ? (<SesionPanel/>) : ( <Link href="/" className="text-sm/6 font-semibold text-gray-900">
               Log in <span aria-hidden="true">&rarr;</span>
             </Link> ) }
                 </div>

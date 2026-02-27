@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { postReview } from "../api/api";
 
-export default function RestaurantRating({ name }) {
+export default function RestaurantRating({ local , setIsPosted }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [hover, setHover] = useState(0);
@@ -14,18 +15,24 @@ export default function RestaurantRating({ name }) {
     5: "Excelente",
   };
 
-  const handleSubmit = () => {
-    if (rating > 0) setSubmitted(true);
+  const handleSubmit = async () => {
+    if (rating > 0){
+      await postReview( local.id ,rating , comment);
+      setIsPosted(true);
+      setSubmitted(true);
+    } 
   };
 
+
   return (
-    <div className="min-h-screen bg-orange-50 flex items-center justify-center p-4">
+    <div className="min-h-screen  flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm text-center">
-        <h2 className="text-2xl font-bold text-gray-800">{name}</h2>
-        <p className="text-gray-400 text-sm mb-6">¿Cómo fue tu experiencia?</p>
+        
 
         {!submitted ? (
           <>
+          <h2 className="text-2xl font-bold text-gray-800">{local.name}</h2>
+          <p className="text-gray-400 text-sm mb-6">¿Cómo fue tu experiencia?</p>
             <div className="flex justify-center gap-2 mb-3">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
