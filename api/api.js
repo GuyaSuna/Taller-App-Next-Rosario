@@ -70,6 +70,11 @@ const getLocal = async (id) => {
 
 const getUser = async (id) => {
     const response = await fetch(`${URL}/api/users/${id}`);
+    
+    console.log(response);
+    if(!response.ok){
+        throw new Error("Error en el getUser");
+    }
 
     const data = await response.json();
 

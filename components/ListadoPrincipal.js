@@ -3,9 +3,10 @@
 import { useEffect , useState } from "react";
 import {getLocals} from "../api/api";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ListadoPrincipalComponent = () => {
-
+    const router = useRouter();
     const [token, setToken] = useState("");
     const [user , setUser] = useState({});
     const [locals , setLocals] = useState([]);
@@ -22,12 +23,19 @@ const ListadoPrincipalComponent = () => {
 
 
     useEffect(() => {
+
+        const user = localStorage.getItem("user");
+
+        if(user){
+          setUser(JSON.parse(user));
         const token = localStorage.getItem("token");
-        const user = JSON.parse(localStorage.getItem("user"));
         console.log("Usuario en Listado Principal" , user);
         console.log("Token en Listado Principal" , token);
-        setUser(user);
         setToken(token);
+        }else{
+          router.push("/");
+        }
+      
     }, [])
 
     useEffect(() => {
@@ -41,6 +49,7 @@ const ListadoPrincipalComponent = () => {
 
     return(
    <div className="bg-white">
+    {user && 
     
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
@@ -154,7 +163,7 @@ const ListadoPrincipalComponent = () => {
             <div key={local.id} className="group relative">
               <img
                 alt={local.name}
-                src={local.photos ? local.photos[0] : "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudGVzfGVufDB8fDB8fHww" }
+                src={local.photos && local.photos[0] ? local.photos[0] : "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudGVzfGVufDB8fDB8fHww" }
                 className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
               />
               <div className="mt-4 flex justify-between">
@@ -172,7 +181,7 @@ const ListadoPrincipalComponent = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div>}
     </div>
     );
 
